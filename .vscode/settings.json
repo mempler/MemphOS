@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "kernel.h": "c",
+        "terminal.h": "c",
+        "string.h": "c"
+    }
+}

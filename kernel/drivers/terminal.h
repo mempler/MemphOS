@@ -1,7 +1,7 @@
 #ifndef H_KERNEL_TERMINAL
 #define H_KERNEL_TERMINAL
 
-#include "../kernel.h"
+#include <types.h>
 
 #ifndef KTERM_NOCONST
 

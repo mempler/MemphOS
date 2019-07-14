@@ -2,14 +2,14 @@ CC=gcc
 ASM=nasm
 LD=ld
 BUILD=build
-ARGS=-static
+ARGS=-static -I./libc -I./kernel -fno-builtin
 
 .PHONY : make_dirs
 
 libc : clean
 	$(MAKE) -C libc -f libc.mk
 
-kernel : make_dirs
+kernel : make_dirs libc
 	$(ASM) -f elf32 kernel/kernel.asm -o $(BUILD)/ksm.o
 
 	$(CC) -m32 -c kernel/kernel.c -o $(BUILD)/kc.o $(ARGS)
@@ -17,7 +17,8 @@ kernel : make_dirs
 
 	$(LD) -m elf_i386 -T kernel/link.ld -o $(BUILD)/kernel.bin \
 		$(BUILD)/ksm.o $(BUILD)/kc.o \
-		$(BUILD)/drivers/tc.o
+		$(BUILD)/drivers/tc.o \
+		$(BUILD)/libc.a
 	
 qemu : kernel
 	qemu-system-i386 -kernel $(BUILD)/kernel.bin
