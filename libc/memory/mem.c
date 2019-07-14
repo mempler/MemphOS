@@ -19,7 +19,7 @@ u32 free_mem_addr = 0x10000;
 
 // Todo: make a more smart solution, as this is highly limited
 void*
-kmalloc(size size)
+kmalloc(size pSize)
 {
     if (free_mem_addr & 0xFFFFF000) {
         free_mem_addr &= 0xFFFFF000;
@@ -27,7 +27,7 @@ kmalloc(size size)
     }
 
     u32 ret = free_mem_addr;
-    free_mem_addr += size;
+    free_mem_addr += pSize;
 
     return (void*) ret;
 }
