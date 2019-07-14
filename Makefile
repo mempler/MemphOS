@@ -2,7 +2,7 @@ CC=gcc
 ASM=nasm
 LD=ld
 BUILD=build
-ARGS=-static -I./libc -I./kernel -fno-builtin
+ARGS=-static -I./libc -fno-builtin
 
 .PHONY : make_dirs
 
