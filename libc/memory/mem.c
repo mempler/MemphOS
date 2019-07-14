@@ -15,19 +15,19 @@ memset(void* pDest, u8 pVal, size pLen) {
 }
 
 
-u32 free_mem_addr = 0x10000;
+u32 _LC_M_free_mem_addr = 0x10000;
 
 // Todo: make a more smart solution, as this is highly limited
 void*
 kmalloc(size pSize)
 {
-    if (free_mem_addr & 0xFFFFF000) {
-        free_mem_addr &= 0xFFFFF000;
-        free_mem_addr += 0x1000;
+    if (_LC_M_free_mem_addr & 0xFFFFF000) {
+        _LC_M_free_mem_addr &= 0xFFFFF000;
+        _LC_M_free_mem_addr += 0x1000;
     }
 
-    u32 ret = free_mem_addr;
-    free_mem_addr += pSize;
+    u32 ret = _LC_M_free_mem_addr;
+    _LC_M_free_mem_addr += pSize;
 
     return (void*) ret;
 }
