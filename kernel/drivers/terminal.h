@@ -25,13 +25,4 @@ extern const i32 CCOL_WHITE;
 
 #endif
 
-void
-print(CPChar pStr);
-
-void
-print_colorized(CPChar pStr, i32 pColF, i32 pColB);
-
-void
-clear();
-
 #endif

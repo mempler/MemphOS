@@ -2,6 +2,7 @@
 #include "drivers/terminal.h"
 
 #include <memory/mem.h>
+#include <stdout.h>
 
 void
 kmain()

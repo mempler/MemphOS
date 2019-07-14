@@ -61,18 +61,3 @@ _K_T_clear() {
     _K_T_CPOS_X = 0;
     _K_T_CPOS_Y = 0;
 }
-
-void
-print(CPChar pStr) {
-    _K_T_print(pStr, CCOL_LIGHT_GRAY, 0x00);
-}
-
-void
-clear() {
-    _K_T_clear();
-}
-
-void
-print_colorized(CPChar pStr, i32 pColF, i32 pColB) {
-    _K_T_print(pStr, pColF, pColB);
-}
