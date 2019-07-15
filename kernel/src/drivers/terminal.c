@@ -2,7 +2,7 @@
 
 #include "terminal.h"
 
-#define ADDR_VGA 0xb8000
+#define ADDR_VGA 0x000b8000
 
 const i32 CCOL_BLACK         = 0x00;
 const i32 CCOL_BLUE          = 0x01;
@@ -33,22 +33,6 @@ _K_T_set_char(i8 pC, i32 pColF, i32 pColB, i32 pX, i32 pY) {
      u16 attrib = (pColB << 4) | (pColF & 0x0F);
      volatile u16 *where = (volatile u16 *) ADDR_VGA + (pY * 80 + pX) ;
      *where = pC | (attrib << 8);
-}
-
-void
-_K_T_print(CPChar pStr, i32 pColF, i32 pColB) {
-    while (*pStr != 0x00)
-    {
-        if (*pStr == 0x0A)
-        {
-            _K_T_CPOS_Y++;
-            _K_T_CPOS_X = 0;
-            *pStr++;
-            continue;
-        }
-
-        _K_T_set_char(*pStr++, pColF, pColB, _K_T_CPOS_X++, _K_T_CPOS_Y);
-    }
 }
 
 void
