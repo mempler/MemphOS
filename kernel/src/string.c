@@ -2,16 +2,19 @@
 
 size_t strlen(const char* pStr) {
     uint64_t i = 0;
-    while (*pStr++ != 0x00) i++;
+
+    while (*pStr++ != 0x00)
+      i++;
+
     return i;
 }
 
 uint32_t _LC_M_free_mem_addr = 0x10000;
 
 void*
-kmalloc(size_t pSize)
-{
-    if (_LC_M_free_mem_addr & 0xFFFFF000) {
+kmalloc(size_t pSize) {
+    if (_LC_M_free_mem_addr & 0xFFFFF000)
+    {
         _LC_M_free_mem_addr &= 0xFFFFF000;
         _LC_M_free_mem_addr += 0x1000;
     }

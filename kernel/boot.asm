@@ -17,9 +17,9 @@ section         .bss
 stack_bottom:
         resb 16384
 stack_top:
- 
 
-section         .text
+
+section        .text
         extern kmain ; Kernel Main (from C)
         global _start ; Global Assembly Entry
 

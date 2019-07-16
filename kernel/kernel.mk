@@ -16,12 +16,12 @@ ARGS=-static -I $(INCLUDE) -nostdlib -T link.ld -ffreestanding
 all : kernel
 
 kernel : make_dirs
-	@nasm -felf32 $(SRC)/boot.asm -o$(BK)/bsm.o
+	@nasm -felf32 boot.asm -o$(BK)/bsm.o
 	@$(CC) -m32 \
 		$(SRC_FILES) \
 		$(BK)/bsm.o \
 		-o $(BUILD)/kernel.bin \
 		$(ARGS)
-	
+
 make_dirs :
 	@mkdir $(BK)
