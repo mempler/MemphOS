@@ -20,6 +20,3 @@ Run Qemu (Doesn't require `make kernel`): \
 
 Run Qemu with Iso (Doesn't require `make iso` or `make kernel`): \
 `make qemu_iso`
-
-# License
-No license! feel free to use it since i also just copy paste and figuring out how everything works etc.

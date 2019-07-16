@@ -24,6 +24,9 @@ qemu_iso : iso
 	@qemu-system-i386 -cdrom $(BUILD)/out/memphos.iso
 
 
+build_tools :
+	@$(MAKE) -C vendor -f vendor.mk
+
 
 make_dirs : clean
 	@mkdir $(BUILD)

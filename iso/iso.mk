@@ -9,11 +9,11 @@ all : build_iso
 
 
 build_iso : make_dirs
-	cp -R content/* $(BISO)
-	cp $(BUILD)/kernel.bin $(BISO)/kernel.bin
+	@cp -R content/* $(BISO)
+	@cp $(BUILD)/kernel.bin $(BISO)/kernel.bin
 
-	grub-mkrescue -o $(BO)/$(ISONAME).iso $(BISO)
+	@grub-mkrescue -o $(BO)/$(ISONAME).iso $(BISO)
 
 make_dirs :
-	mkdir $(BO)
-	mkdir $(BISO)
+	@mkdir $(BO)
+	@mkdir $(BISO)

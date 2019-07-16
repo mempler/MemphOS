@@ -10,5 +10,15 @@ global start ; Global Assembly Entry
 extern kmain ; Kernel Main (from C)
 
 start:
+        cli
+        lgdt [gdtr]
+        mov eax, cr0 
+        or al, 1
+        mov cr0, eax
+        jmp 08h:start_kernel
+
+start_initialization:
+
+start_kernel:
         call kmain ; Call kernel Main
         hlt ; do NOT exit
