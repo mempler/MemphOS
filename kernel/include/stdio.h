@@ -1,5 +1,5 @@
-#ifndef H_K_STDOUT
-#define H_K_STDOUT
+#ifndef H_K_STDIO
+#define H_K_STDIO
 
 #include <types.h>
 

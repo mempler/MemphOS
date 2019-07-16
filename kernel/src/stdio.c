@@ -1,4 +1,4 @@
-#include <stdout.h>
+#include <stdio.h>
 #include <drivers/VGA.h>
 
 extern uint8_t _K_VGA_CPOS_X;

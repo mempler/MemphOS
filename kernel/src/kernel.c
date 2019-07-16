@@ -1,8 +1,5 @@
 #include <kernel.h>
-
-#include <drivers/VGA.h>
-#include <string.h>
-#include <stdout.h>
+#include <stdio.h>
 
 void
 kmain()

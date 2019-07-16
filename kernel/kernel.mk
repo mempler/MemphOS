@@ -7,7 +7,7 @@ SRC=src
 INCLUDE=include
 
 SRC_FILES=\
-	$(SRC)/kernel.c $(SRC)/stdout.c $(SRC)/string.c \
+	$(SRC)/kernel.c $(SRC)/stdio.c $(SRC)/string.c \
 	$(SRC)/drivers/VGA.c
 
 ARGS=-static -I $(INCLUDE) -nostdlib -T link.ld -ffreestanding
