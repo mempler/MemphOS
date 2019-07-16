@@ -1,7 +1,7 @@
-#include "kernel.h"
-#include "drivers/terminal.h"
+#include <kernel.h>
 
-#include <memory/mem.h>
+#include <drivers/VGA.h>
+#include <string.h>
 #include <stdout.h>
 
 void

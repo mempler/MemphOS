@@ -1,22 +1,25 @@
-CC=gcc
-ASM=nasm
+CC=i686-elf-gcc
 LD=ld
 
 BUILD=../build
 BK=$(BUILD)/kernel
 SRC=src
+INCLUDE=include
 
-SRC_FILES=$(SRC)/kernel.c $(SRC)/drivers/terminal.c $(SRC)/memory/utilities.c
+SRC_FILES=\
+	$(SRC)/kernel.c $(SRC)/stdout.c $(SRC)/string.c \
+	$(SRC)/drivers/VGA.c
 
-ARGS=-static -I../libc/src -nostdlib -T link.ld
+ARGS=-static -I $(INCLUDE) -nostdlib -T link.ld -ffreestanding
+
 
 all : kernel
 
 kernel : make_dirs
-	@$(ASM) -f elf32 $(SRC)/boot.asm -o $(BK)/bsm.o
+	@nasm -felf32 $(SRC)/boot.asm -o$(BK)/bsm.o
 	@$(CC) -m32 \
 		$(SRC_FILES) \
-		$(BUILD)/libc.a $(BK)/bsm.o \
+		$(BK)/bsm.o \
 		-o $(BUILD)/kernel.bin \
 		$(ARGS)
 	

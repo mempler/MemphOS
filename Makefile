@@ -2,15 +2,8 @@ BUILD=build
 
 .PHONY : make_dirs clean
 
-
-
-libc : make_dirs
-	@$(MAKE) -C libc -f libc.mk
-
-kernel : make_dirs libc
+kernel : make_dirs
 	@$(MAKE) -C kernel -f kernel.mk
-
-
 
 iso : kernel 
 	@$(MAKE) -C iso -f iso.mk

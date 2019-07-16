@@ -1,24 +1,33 @@
 bits    32
 
-section         .text
+MBALIGN         equ 1<<0
+MEMINFO         equ 1<<1
+FLAGS           equ MBALIGN | MEMINFO
+MAGIC           equ 0x1BADB002
+CHECKSUM        equ -(MAGIC + FLAGS)
+
+section         .boot
         align   4
-        dd      0x1BADB002 ; Magic Value for a "Boot Loader"
-        dd      0x00
-        dd      - (0x1BADB002+0x00)
+        dd      MAGIC ; Magic Value for a "Boot Loader"
+        dd      FLAGS
+        dd      CHECKSUM
 
-global start ; Global Assembly Entry
-extern kmain ; Kernel Main (from C)
+section         .bss
+        align 16
+stack_bottom:
+        resb 16384
+stack_top:
+ 
 
-start:
-        cli
-        lgdt [gdtr]
-        mov eax, cr0 
-        or al, 1
-        mov cr0, eax
-        jmp 08h:start_kernel
+section         .text
+        extern kmain ; Kernel Main (from C)
+        global _start ; Global Assembly Entry
 
-start_initialization:
+_start:
+        mov esp, stack_top
 
-start_kernel:
         call kmain ; Call kernel Main
-        hlt ; do NOT exit
+	cli
+.hang:	hlt
+	jmp .hang
+.end:
