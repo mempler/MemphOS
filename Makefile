@@ -1,28 +1,56 @@
-BUILD=build
+CC      = i686-elf-gcc
+AS      = nasm
+QEMU    = qemu-system-i386
 
-.PHONY : make_dirs clean
+CFLAGS  = -m32 \
+		  -Wall -Wextra -Werror -g \
+		  -Ikernel/include \
+		  -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -c
+ASFLAGS = -felf32
+LDFLAGS = -Tkernel/link.ld -melf_i386
 
-kernel : make_dirs
-	@$(MAKE) -C kernel -f kernel.mk
+BUILD   = ./build
 
-iso : kernel 
-	@$(MAKE) -C iso -f iso.mk
+SRC_C   = kernel/src/drivers/VGA.c \
+		  kernel/src/kernel.c kernel/src/stdio.c kernel/src/string.c
+SRC_ASM = kernel/boot.asm kernel/src/io.asm
 
+LIBS    = # no linux libs!
+OBJ     = $(SRC_C:%.c=$(BUILD)/%.o)
+OBJ_ASM = $(SRC_ASM:%.asm=$(BUILD)/%.o)
 
+CLEAN_FILES = $(OBJ) $(OBJ_ASM) $(BUILD)/kernel.bin
 
-qemu : kernel
-	@qemu-system-i386 -kernel $(BUILD)/kernel.bin
-
-qemu_iso : iso
-	@qemu-system-i386 -cdrom $(BUILD)/out/memphos.iso
-
-
-build_tools :
-	@$(MAKE) -C vendor -f vendor.mk
+all : qemu
 
 
-make_dirs : clean
-	@mkdir $(BUILD)
+kernel.bin : $(OBJ) $(OBJ_ASM)
+	ld $(LDFLAGS) $^ -o $(BUILD)/kernel.bin
+
+memph.iso : kernel.bin
+	@mkdir -p $(BUILD)/iso
+
+	@cp -R iso/* $(BUILD)/iso
+	@cp $(BUILD)/kernel.bin $(BUILD)/iso/boot/kernel.bin
+
+	@grub-mkrescue -o $(BUILD)/$@ $(BUILD)/iso
+
+
+$(OBJ): $(SRC_C)
+	@mkdir -p $(dir $@);
+	$(CC) $(CFLAGS) $(@:build/%.o=%.c) -o $@
+
+$(OBJ_ASM): $(SRC_ASM)
+	@mkdir -p $(dir $@);
+	$(AS) $(ASFLAGS) $(@:build/%.o=%.asm) -o $@
+
+
+qemu : kernel.bin
+	$(QEMU) -kernel $(BUILD)/kernel.bin -m 128 -s
+
+bochs : memph.iso
+	bochs -f bochsrc.txt -q 
 
 clean :
-	@rm -rf $(BUILD)
+	rm $(CLEAN_FILES)
+

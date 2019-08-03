@@ -1,11 +1,4 @@
-build/*
-*/build/*
-*/**/build/*
-.vscode/
-
-#Added by cargo
-#
-#already existing elements are commented out
-
-/target
-**/*.rs.bk
+build/
+*.txt
+*.o
+*.log

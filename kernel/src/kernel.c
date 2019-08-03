@@ -1,11 +1,16 @@
 #include <kernel.h>
 #include <stdio.h>
 
-void
-kmain()
-{
-    clear();
+#include <drivers/VGA.h>
+#include <io.h>
 
-    print("Hello\n");
-    print("World");
+void
+_k_initialize() {
+    _K_VGA_Initialize();
+}
+
+void
+_k_main()
+{
+	print("Hello\nWorld!\n");
 }
